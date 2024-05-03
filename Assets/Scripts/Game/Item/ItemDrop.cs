@@ -1,26 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class ItemDrop : MonoBehaviour
 {
     public ClickInputSystem clickInputSystem;  // 클릭 입력 시스템 참조
-    public ItemProbability itemProbability;
+    public ItemProbability itemProbability;   // 아이템 확률 관리 스크립트 참조
+    public ItemAni itemAni;                   // 아이템 애니메이션 스크립트 참조
 
     private void OnEnable()
     {
-        clickInputSystem.OnItemClicked += HandleItemClicked;
+        clickInputSystem.OnItemClicked += HandleItemClicked;  // 이벤트 구독
     }
 
     private void OnDisable()
     {
-        clickInputSystem.OnItemClicked -= HandleItemClicked;
+        clickInputSystem.OnItemClicked -= HandleItemClicked;  // 이벤트 구독 해제
     }
 
     private void HandleItemClicked(GameObject item)
     {
-        item.SetActive(false);
-        Vector3 spawnPosition = item.transform.position;//아이템이 생성될 위치는 클릭된 표시의 위치
-        itemProbability.SpawnItem(spawnPosition);  // 새 아이템 생성
+        item.SetActive(false);                   // 클릭된 아이템을 비활성화
+        GameObject newItem = itemProbability.SpawnItem(item.transform.position);  // 새 아이템 생성
+        itemAni.MoveItem(newItem);               // 새 아이템을 이동시키는 메서드 호출
     }
 }
