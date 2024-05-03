@@ -1819,16 +1819,29 @@ MonoBehaviour:
   categories:
   - name: "\uC77C\uBC18"
     items:
-    - {fileID: 2238976970609290152, guid: 350e498bb5b159d4c940f3b84b742802, type: 3}
-    probability: 30
+    - {fileID: 7849268720323985771, guid: 549155214f3b6d04ea2cd05a7cb67afa, type: 3}
+    - {fileID: 5572265184326590422, guid: 209facb784ce9434e9be8359ab99e2b7, type: 3}
+    - {fileID: 6724987532296457641, guid: eff471b0396534941aec5fa1a59e0ea6, type: 3}
+    - {fileID: 2797531360356009232, guid: 1d2ea772c6003dc42a29127d01c63761, type: 3}
+    - {fileID: 3551577234005446837, guid: 702cedf8e06efcd4bbd879a451ea28bf, type: 3}
+    - {fileID: 2207404156372417122, guid: 73d59ba0520d9324b9f573cb1cf390cb, type: 3}
+    - {fileID: 1569372483001166675, guid: 57776b6cc26b8cc49b6057c780ded3a7, type: 3}
+    - {fileID: 3932691685291857978, guid: 0af4568faf181c1468c9cc73cb3168ed, type: 3}
+    - {fileID: 412449270838778182, guid: 94278ae692753d740922ae2b79b96a19, type: 3}
+    - {fileID: 8331499641677957727, guid: e5c8f5e5c7be4ac49b50fa3cc07f7a44, type: 3}
+    probability: 60
   - name: "\uACE0\uAE09"
     items:
-    - {fileID: 1108339424178719911, guid: 21dd2fa0c38c6bc43ad50d765aab4c41, type: 3}
+    - {fileID: 5591907811636218411, guid: 0fef0998dbd2fbf498ca1a6b705ccb0b, type: 3}
+    - {fileID: 8219180879854863818, guid: afb455f2652cf8147a4bb20fd8b6d7f4, type: 3}
+    - {fileID: 901355736163435757, guid: 2c10837ec95b5504cab8ab04ec0a4c83, type: 3}
+    - {fileID: 89529285084739365, guid: 6025183c45539054ca105e64ce02809f, type: 3}
+    - {fileID: 6731606023483762340, guid: 2f861a97a6ee3f74a832a80c41d86d5a, type: 3}
     probability: 30
   - name: "\uD76C\uADC0"
     items:
-    - {fileID: 5840664700257552229, guid: 2d9d0d86cab42f84f9f65e3d8e518056, type: 3}
-    probability: 40
+    - {fileID: 3887012962920561002, guid: 5d23ca7803815214ea74f5029038f419, type: 3}
+    probability: 10
 --- !u!1 &195319277
 GameObject:
   m_ObjectHideFlags: 0
@@ -13615,7 +13628,7 @@ Transform:
   m_GameObject: {fileID: 1552940545}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 20.106, y: -0.43, z: 0}
+  m_LocalPosition: {x: 18.82, y: -0.43, z: 0}
   m_LocalScale: {x: 0.4843, y: 0.4216, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13807,7 +13820,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1574841999
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17252,8 +17265,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1702.2, y: -994}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 68.65906, y: -1019.3656}
+  m_SizeDelta: {x: 81.3181, y: 78.2555}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1879130839
 MonoBehaviour:
