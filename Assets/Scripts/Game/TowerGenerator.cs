@@ -39,7 +39,6 @@ public class TowerGenerator : MonoBehaviour
                 Vector3 position = new Vector3(index * (roomSpacing), floor * (roomup), 0);
                 GameObject roomPrefab = LowerroomPrefabs[Random.Range(0, LowerroomPrefabs.Length)];
                 GameObject roomInstance = Instantiate(roomPrefab, position, Quaternion.identity);
-                //Instantiate(roomPrefab, position, Quaternion.identity);
 
                 // RoomInfo 컴포넌트 설정
                 RoomInfo roomInfo = roomInstance.GetComponent<RoomInfo>();
@@ -50,7 +49,6 @@ public class TowerGenerator : MonoBehaviour
                 roomnum++;
                 roomInfo.RoomNumber = roomnum;  // 방 번호 설정
                 roomInfo.CurrenFloor = floor + 1;  // 층 번호 설정
-                //RoomManager.Instance.RegisterRoom(roomInfo);  // RoomManager에 방 등록
             }
         }
     }

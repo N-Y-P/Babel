@@ -7,6 +7,8 @@ public class UIManager : MonoBehaviour
     public Transform canvasTransform; // Canvas받기
 
     // 현재 활성화된 창을 비활성화하는 메소드
+
+    //x버튼 
     //GameBtnEvent에서 가져감
     public void CloseActiveWindow()
     {
