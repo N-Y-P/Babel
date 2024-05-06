@@ -18,55 +18,54 @@ public class RoomClicked : MonoBehaviour
     {
         clickInputSystem.OnRoomClicked -= HandleRoomClicked;
     }
-
     private void HandleRoomClicked(GameObject room)
     {
-        if(playerAni.Moveable)
+        if (playerAni.Moveable)
         {
+            RoomInfo clickedRoomInfo = room.GetComponent<RoomInfo>();
+
             // 이전에 클릭된 방의 Collider를 다시 활성화
             if (currentRoom != null && currentRoom != room)
             {
                 currentRoom.GetComponent<BoxCollider2D>().enabled = true;
             }
 
-            // 새로운 방 클릭 처리
-            if (currentRoom != room) // 같은 방을 클릭하지 않았을 때만 실행
+            // 첫 이동이고, 1층 1번 방을 클릭했는지 확인
+            if (currentRoom == null && clickedRoomInfo != null && clickedRoomInfo.RoomNumber == 1 && clickedRoomInfo.CurrenFloor == 1)
+            {//현재 방이 없고 && 클릭한 방의 정보가 있고 && 1층 1번방일때
+                RealRoomClick(room, clickedRoomInfo);
+            }
+            else if (currentRoom != null)
             {
-                playerMovement.MovePlayerToRoom(room); // PlayerMovement 스크립트의 메서드 호출하여 해당 방으로 이동
-                currentRoom = room; // 현재 방 업데이트
-                room.GetComponent<BoxCollider2D>().enabled = false; // 새로운 방의 Collider 비활성화
-
-                Transform hideTransform = room.transform.Find("Hide"); // 'Hide' 오브젝트 찾기
-                Transform itemsTransform = room.transform.Find("Items"); // 'Items' 오브젝트 찾기
-                if (hideTransform != null) // 만약 hide가 있으면
+                RoomInfo currentRoomInfo = currentRoom.GetComponent<RoomInfo>();
+                // 이후 이동은 앞뒤 방만 이동 가능
+                if (clickedRoomInfo != null && currentRoomInfo != null &&
+                    (clickedRoomInfo.RoomNumber == currentRoomInfo.RoomNumber + 1 || clickedRoomInfo.RoomNumber == currentRoomInfo.RoomNumber - 1))
                 {
-                    SpriteRenderer spriteRenderer = hideTransform.GetComponent<SpriteRenderer>(); // SpriteRenderer 컴포넌트 가져오기
-                    if (spriteRenderer != null) // 스프라이트가 있으면
-                    {
-                        Color newColor = spriteRenderer.color;
-                        newColor.a = 0;  // 투명도를 0으로 조정
-                        spriteRenderer.color = newColor;  // 색상 변경 적용
-                        itemsTransform.gameObject.SetActive(true); // 아이템 활성화
-                    }
+                    RealRoomClick(room, clickedRoomInfo);
                 }
             }
         }
+    }
 
-        /*
-        playerMovement.MovePlayerToRoom(room); // PlayerMovement 스크립트의 메서드 호출(방 클릭하면 해당 방으로 이동)
-        Transform hideTransform = room.transform.Find("Hide");  // 'Hide' 오브젝트 찾기
-        Transform itemsTransform = room.transform.Find("Items");//'Items' 오브젝트 찾기
-        if (hideTransform != null)//만약 hide가 있으면
+    private void RealRoomClick(GameObject room, RoomInfo clickedRoomInfo)
+    {
+        playerMovement.MovePlayerToRoom(room); // 해당 방으로 이동
+        currentRoom = room; // 현재 방 업데이트
+        room.GetComponent<BoxCollider2D>().enabled = false; // 새로운 방의 Collider 비활성화
+
+        Transform hideTransform = room.transform.Find("Hide"); // 'Hide' 오브젝트 찾기
+        Transform itemsTransform = room.transform.Find("Items"); // 'Items' 오브젝트 찾기
+        if (hideTransform != null) // 만약 hide가 있으면
         {
-            SpriteRenderer spriteRenderer = hideTransform.GetComponent<SpriteRenderer>();  // SpriteRenderer 컴포넌트 가져오기
-            if (spriteRenderer != null)//스프라이트가 있으면
+            SpriteRenderer spriteRenderer = hideTransform.GetComponent<SpriteRenderer>(); // SpriteRenderer 컴포넌트 가져오기
+            if (spriteRenderer != null) // 스프라이트가 있으면
             {
                 Color newColor = spriteRenderer.color;
                 newColor.a = 0;  // 투명도를 0으로 조정
                 spriteRenderer.color = newColor;  // 색상 변경 적용
-                itemsTransform.gameObject.SetActive(true);
+                itemsTransform.gameObject.SetActive(true); // 아이템 활성화
             }
         }
-        */
     }
 }

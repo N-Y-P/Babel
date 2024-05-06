@@ -5,18 +5,22 @@ using Cinemachine;
 
 public class CameraMove : MonoBehaviour
 {
-    public CinemachineVirtualCamera P1Camera; // P1Camera 객체
-    public Transform playerTransform; // 플레이어 Transform 객체
+    public CinemachineVirtualCamera virtualCamera1;
+    public CinemachineVirtualCamera virtualCamera2; 
 
-    void Start()
+    public void VirtualCamera1()//point1일때 
     {
-        // 초기에 카메라의 Follow 속성을 플레이어로 설정
-        P1Camera.Follow = playerTransform;
+        // Virtual Camera 1의 우선순위를 높여 활성화
+        virtualCamera1.Priority = 10;
+        virtualCamera2.Priority = 5;
+        Debug.Log("Virtual Camera 1 활성화");
     }
 
-    void Update()
+    public void VirtualCamera2()//point2일때
     {
-        // 카메라가 계속 플레이어를 따라가도록 매 프레임마다 Follow 속성을 업데이트
-        P1Camera.Follow = playerTransform;
+        // Virtual Camera 2의 우선순위를 높여 활성화
+        virtualCamera1.Priority = 5;
+        virtualCamera2.Priority = 10;
+        Debug.Log("Virtual Camera 2 활성화");
     }
 }

@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour
     public Transform playerTransform; // 플레이어의 위치값 가져오기
     public PlayerAni playerAni; //이동 시 애니메이션
     private RoomInfo currentRoomInfo; // 현재 플레이어가 위치한 방 정보 저장
+    public CameraMove cameraMove;
+    float targetYRotation = 0;
 
     // 방 클릭 시 그 방의 point로 이동하는 메소드
     public void MovePlayerToRoom(GameObject room)
@@ -35,32 +37,37 @@ public class PlayerMovement : MonoBehaviour
             if (currentRoomInfo.RoomNumber < newRoomInfo.RoomNumber)
             {
                 // 새로운 방 번호가 더 크면 point1으로 이동
+                cameraMove.VirtualCamera1();
+                targetYRotation = 180;
                 targetPosition = newRoomInfo.point1.position;
+                
             }
             else
             {
                 // 새로운 방 번호가 더 작거나 같으면 point2로 이동 (조건에 따라 변경 가능)
+                cameraMove.VirtualCamera2();
+                targetYRotation = 0;
                 targetPosition = newRoomInfo.point2.position;
             }
         }
         else
         {
             // 현재 방 정보가 없는 경우 (처음 이동하는 경우) 기본적으로 point1로 이동
+            cameraMove.VirtualCamera1();
+            targetYRotation = 180;
             targetPosition = newRoomInfo.point1.position;
         }
 
         // 이동 애니메이션 실행
         playerAni.MoveToPosition(targetPosition);
         Debug.Log("Player moves to: Room " + newRoomInfo.RoomNumber + " at position point1 or point2");
+        playerTransform.eulerAngles = new Vector3(
+            playerTransform.eulerAngles.x, 
+            targetYRotation, 
+            playerTransform.eulerAngles.z);
 
         // 현재 방 정보 업데이트
         currentRoomInfo = newRoomInfo;
     }
-    /*
-    public RoomInfo CurrentRoomInfo
-    {
-        get { return currentRoomInfo; }
-    }
-    */
 }
 
