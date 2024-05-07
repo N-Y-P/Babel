@@ -19,6 +19,9 @@ public class StairGenerator : MonoBehaviour
 
     void GenerateStairs()
     {
+        int startFloor = 1;
+        int endFloor = 2;
+
         for (int i = 0; i < stairsCount; i++)
         {
             GameObject stairPrefab;
@@ -38,7 +41,15 @@ public class StairGenerator : MonoBehaviour
             }
 
             // 계단 인스턴스 생성
-            Instantiate(stairPrefab, position, Quaternion.identity, this.transform);
+            GameObject stairInstance = Instantiate(stairPrefab, position, Quaternion.identity, this.transform);
+            StairInfo stairInfo = stairInstance.GetComponent<StairInfo>(); // 기존 컴포넌트 참조 가져오기
+            if (stairInfo != null)
+            {
+                stairInfo.StartFloor = startFloor;
+                stairInfo.EndFloor = endFloor;
+            }
+            startFloor++;
+            endFloor++;
         }
     }
 }

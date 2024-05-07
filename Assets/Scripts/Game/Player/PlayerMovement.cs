@@ -60,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
 
         // 이동 애니메이션 실행
         playerAni.MoveToPosition(targetPosition);
-        Debug.Log("Player moves to: Room " + newRoomInfo.RoomNumber + " at position point1 or point2");
+        Debug.Log("플레이어 방 이동 : Room " + newRoomInfo.RoomNumber);
         playerTransform.eulerAngles = new Vector3(
             playerTransform.eulerAngles.x, 
             targetYRotation, 

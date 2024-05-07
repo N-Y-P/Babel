@@ -17,7 +17,6 @@ public class TowerGenerator : MonoBehaviour
     {
         GenerateTower();
     }
-
     void GenerateTower()
     {
         for (int floor = 0; floor < floors; floor++)
