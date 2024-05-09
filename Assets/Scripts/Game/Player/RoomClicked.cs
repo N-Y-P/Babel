@@ -64,7 +64,10 @@ public class RoomClicked : MonoBehaviour
                 Color newColor = spriteRenderer.color;
                 newColor.a = 0;  // 투명도를 0으로 조정
                 spriteRenderer.color = newColor;  // 색상 변경 적용
-                itemsTransform.gameObject.SetActive(true); // 아이템 활성화
+                if(itemsTransform != null)//만약 아이템이 있으면
+                {
+                    itemsTransform.gameObject.SetActive(true); // 아이템 활성화
+                }
             }
         }
     }

@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -7,9 +9,16 @@ public class PlayerMovement : MonoBehaviour
 {
     public Transform playerTransform; // 플레이어의 위치값 가져오기
     public PlayerAni playerAni; //이동 시 애니메이션
+    public ClimbingStairs climbingStairs; // 계단 이동 로직
     private RoomInfo currentRoomInfo; // 현재 플레이어가 위치한 방 정보 저장
     public CameraMove cameraMove;
     float targetYRotation = 0;
+
+    // 현재 플레이어의 방 정보를 반환하는 메서드
+    public RoomInfo GetCurrentRoomInfo()
+    {
+        return currentRoomInfo;
+    }
 
     // 방 클릭 시 그 방의 point로 이동하는 메소드
     public void MovePlayerToRoom(GameObject room)
@@ -29,26 +38,94 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        Vector3 targetPosition;
+        // 기본 이동 위치를 현재 플레이어 위치로 초기화
+        Vector3 targetPosition = playerTransform.position;
 
         // 현재 위치 정보가 있으면 비교 후 결정
         if (currentRoomInfo != null)
         {
-            if (currentRoomInfo.RoomNumber < newRoomInfo.RoomNumber)
-            {
-                // 새로운 방 번호가 더 크면 point1으로 이동
-                cameraMove.VirtualCamera1();
-                targetYRotation = 180;
-                targetPosition = newRoomInfo.point1.position;
-                
+            if(currentRoomInfo.CurrenFloor < newRoomInfo.CurrenFloor)
+            {//현재 층이 새 층의 번호보다 작다면 (예시 : 1->2층)(올라갈때)
+             // 계단 오르기 로직 호출
+                StairInfo stair = climbingStairs.FindStair(currentRoomInfo.CurrenFloor, newRoomInfo.CurrenFloor);
+                if (stair != null)
+                {
+                    StartCoroutine(climbingStairs.ClimbUpStairs(stair));
+                }
+                if (newRoomInfo.CurrenFloor % 2 == 0)//만약 새 층의 번호가 짝수라면
+                {
+                    cameraMove.VirtualCamera2();
+                    targetYRotation = 0;
+                    targetPosition = newRoomInfo.point2.position;
+
+                }
+                else//새 층의 번호가 홀수(예시 : 2->3층)
+                {
+                    cameraMove.VirtualCamera1();
+                    targetYRotation = 180;
+                    targetPosition = newRoomInfo.point1.position;
+                }
+
             }
-            else
-            {
-                // 새로운 방 번호가 더 작거나 같으면 point2로 이동 (조건에 따라 변경 가능)
-                cameraMove.VirtualCamera2();
-                targetYRotation = 0;
-                targetPosition = newRoomInfo.point2.position;
+            else if(currentRoomInfo.CurrenFloor > newRoomInfo.CurrenFloor)
+            {//내려갈때
+             // 계단 내리기 로직 호출
+                StairInfo stair = climbingStairs.FindStair(currentRoomInfo.CurrenFloor, newRoomInfo.CurrenFloor);
+                if (stair != null)
+                {
+                    StartCoroutine(climbingStairs.ClimbDownStairs(stair));
+                }
+                if (newRoomInfo.CurrenFloor % 2 == 0)//만약 짝수층이라면(3->2층)
+                {
+                    // point1으로 이동
+                    cameraMove.VirtualCamera1();
+                    targetYRotation = 180;
+                    targetPosition = newRoomInfo.point1.position;
+                }
+                else//(2->1층)
+                {
+                    cameraMove.VirtualCamera2();
+                    targetYRotation = 0;
+                    targetPosition = newRoomInfo.point2.position;
+                }
             }
+            else if(currentRoomInfo.CurrenFloor == newRoomInfo.CurrenFloor)
+            {// 같은 층 내에서 이동 
+                if(currentRoomInfo.CurrenFloor % 2 == 0)
+                {//현재 층이 짝수 //방 번호가 커지면 point2로, 작아지면 1로
+                    if (currentRoomInfo.RoomNumber < newRoomInfo.RoomNumber)
+                    {
+                        cameraMove.VirtualCamera2();
+                        targetYRotation = 0;
+                        targetPosition = newRoomInfo.point2.position;
+                        
+                    }
+                    else
+                    {
+                        // point1으로 이동
+                        cameraMove.VirtualCamera1();
+                        targetYRotation = 180;
+                        targetPosition = newRoomInfo.point1.position;
+                    }
+                }
+                else
+                {//현재 층이 홀수 //방 번호가 커지면 point1로, 작아지면 2로
+                    if (currentRoomInfo.RoomNumber < newRoomInfo.RoomNumber)
+                    {
+                        // point1으로 이동
+                        cameraMove.VirtualCamera1();
+                        targetYRotation = 180;
+                        targetPosition = newRoomInfo.point1.position;
+                    }
+                    else
+                    {
+                        cameraMove.VirtualCamera2();
+                        targetYRotation = 0;
+                        targetPosition = newRoomInfo.point2.position;
+                    }
+                }
+            }
+
         }
         else
         {

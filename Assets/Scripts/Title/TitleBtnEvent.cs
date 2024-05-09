@@ -8,12 +8,16 @@ public class TitleBtnEvent : MonoBehaviour
 {
     public bool FadeState = false;
     public GameObject TitleStartBtn;
+    public GameObject ContinueBtn;
+    public GameObject EndBtn;
     public CartoonNextPage cartoonNextPage;
 
     public void GameStart()
     {
         FadeState = true;
         TitleStartBtn.SetActive(false);  //시작버튼 비활성화
+        ContinueBtn.SetActive(false);
+        EndBtn.SetActive(false);
 
     }
     public void GoSkip()
