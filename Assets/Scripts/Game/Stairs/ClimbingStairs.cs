@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;//Action사용
+using static UnityEditor.SceneView;
+
 
 public class ClimbingStairs : MonoBehaviour
 {
@@ -18,56 +21,56 @@ public class ClimbingStairs : MonoBehaviour
     //point3 -> point2 -> 180도 회전 -> point 1 -> 누른 방의 위치로
     #endregion
 
-    public Transform playerTransform; // 플레이어의 Transform 참조
-    public float speed = 3.0f; // 계단을 오르거나 내리는 속도
+    public PlayerAni playerAni;
+    public CameraMove cameraMove;
+    // 계단을 오르는 로직
 
     // 플레이어가 계단을 오르는 메소드
-    public IEnumerator ClimbUpStairs(StairInfo stair)
+    public IEnumerator ClimbUpStairs(StairInfo stair, Action onComplete)
     {
-        // 계단 오르기 애니메이션 실행
-        // 예: playerAni.SetAnimation("climbUp");
+        Vector3[] positions = new Vector3[stair.Positions.Length];
+        float[] rotations = new float[stair.Positions.Length]; // 회전값 배열
 
-        // 계단의 포지션을 따라 플레이어를 이동 (0 -> 1 -> 2)
+        // 계단 오르기 또는 내리기에 따라 초기 회전값 설정
+        rotations[0] = stair.StartFloor % 2 == 0 ? 0 : 180; // 시작 층에 따라 초기 회전값 설정
+        rotations[1] = rotations[0] == 180 ? 0 : 180; // 다음 인덱스에서 회전값 변경
+
         for (int i = 0; i < stair.Positions.Length; i++)
         {
-            Vector3 nextPosition = stair.Positions[i].position;
-            while (playerTransform.position != nextPosition)
-            {
-                playerTransform.position = Vector3.MoveTowards(playerTransform.position, nextPosition, speed * Time.deltaTime);
-                yield return null;
-            }
+            positions[i] = stair.Positions[i].position;
         }
 
-        // 이동 완료 후 대기 애니메이션으로 전환
-        // 예: playerAni.SetAnimation("idle");
+        yield return playerAni.StartCoroutine(playerAni.MoveAlongPath(positions, rotations, onComplete));
     }
 
-    // 플레이어가 계단을 내리는 메소드
-    public IEnumerator ClimbDownStairs(StairInfo stair)
+    // 플레이어가 계단을 내려가는 메소드
+    public IEnumerator ClimbDownStairs(StairInfo stair, Action onComplete)
     {
-        // 계단 내리기 애니메이션 실행
-        // 예: playerAni.SetAnimation("climbDown");
+        Vector3[] positions = new Vector3[stair.Positions.Length];
+        float[] rotations = new float[stair.Positions.Length]; // 회전값 배열
 
-        // 계단의 포지션을 따라 플레이어를 이동 (2 -> 1 -> 0)
-        for (int i = stair.Positions.Length - 1; i >= 0; i--)
+        // 계단 내려가기에 따라 초기 회전값 설정
+        rotations[1] = stair.StartFloor % 2 == 0 ? 180 : 0; // 시작 층에 따라 초기 회전값 설정
+        rotations[2] = rotations[1] == 180 ? 0 : 180; // 다음 인덱스에서 회전값 변경
+
+        for (int i = 0; i < stair.Positions.Length; i++)
         {
-            Vector3 nextPosition = stair.Positions[i].position;
-            while (playerTransform.position != nextPosition)
-            {
-                playerTransform.position = Vector3.MoveTowards(playerTransform.position, nextPosition, speed * Time.deltaTime);
-                yield return null;
-            }
+            positions[i] = stair.Positions[i].position;
         }
 
-        // 이동 완료 후 대기 애니메이션으로 전환
-        // 예: playerAni.SetAnimation("idle");
+        // 회전 배열도 역순으로 설정해야 합니다.
+        Array.Reverse(positions);  // 위치 배열을 역순으로 만듭니다.
+        Array.Reverse(rotations);  // 회전값 배열도 역순으로 설정
+
+        yield return playerAni.StartCoroutine(playerAni.MoveAlongPath(positions, rotations, onComplete));
     }
+    
+    // 적절한 계단 정보 찾기
     public StairInfo FindStair(int currentFloor, int targetFloor)
     {
-        StairInfo[] allStairs = FindObjectsOfType<StairInfo>(); // 모든 StairInfo 오브젝트를 찾음
+        StairInfo[] allStairs = FindObjectsOfType<StairInfo>();
         foreach (StairInfo stair in allStairs)
         {
-            // 오르는 경우와 내리는 경우 모두 검사
             if ((stair.StartFloor == currentFloor && stair.EndFloor == targetFloor) ||
                 (stair.StartFloor == targetFloor && stair.EndFloor == currentFloor))
             {
@@ -76,4 +79,5 @@ public class ClimbingStairs : MonoBehaviour
         }
         return null; // 적절한 계단을 찾지 못했을 경우 null 반환
     }
+    
 }

@@ -4889,7 +4889,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa7155796051b734daa718462081dc5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BindingMode: 1
+  m_BindingMode: 0
   m_FollowOffset: {x: 0, y: 1.5, z: 10}
   m_XDamping: 1
   m_YDamping: 1
@@ -5737,8 +5737,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63417cc724e0c3e4ead77cd66e79b910, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTransform: {fileID: 404726237}
-  speed: 5
+  playerAni: {fileID: 954636267}
+  cameraMove: {fileID: 1741826629}
 --- !u!1 &509004415
 GameObject:
   m_ObjectHideFlags: 0
@@ -10695,8 +10695,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 242758650}
-  speed: 5
+  speed: 4.5
   Moveable: 1
+  cameraMove: {fileID: 1741826629}
 --- !u!1 &957493419
 GameObject:
   m_ObjectHideFlags: 0
