@@ -5,6 +5,7 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     public Transform canvasTransform; // Canvas받기
+    public GameObject TransparentWall;
 
     // 현재 활성화된 창을 비활성화하는 메소드
 

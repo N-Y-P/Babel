@@ -9,6 +9,7 @@ public class ClickInputSystem : MonoBehaviour
     public event Action<GameObject> OnEnemyClicked;  // Enemy 클릭 이벤트
     public event Action<GameObject> OnItemClicked;   // Item 클릭 이벤트
     public event Action<GameObject> OnRoomClicked; //Room 클릭 이벤트
+    public event Action<GameObject> OnRecipeClicked; // Recipe 클릭 이벤트
     private Camera _mainCamera;
 
     private void Awake()
@@ -23,17 +24,20 @@ public class ClickInputSystem : MonoBehaviour
         var rayHit = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()));
         if (rayHit.collider != null)
         {
-            if (rayHit.collider.CompareTag("Enemy"))
+            switch (rayHit.collider.tag)
             {
-                OnEnemyClicked?.Invoke(rayHit.collider.gameObject);
-            }
-            else if (rayHit.collider.CompareTag("Item"))
-            {
-                OnItemClicked?.Invoke(rayHit.collider.gameObject);
-            }
-            else if(rayHit.collider.CompareTag("Room"))
-            {
-                OnRoomClicked?.Invoke(rayHit.collider.gameObject);
+                case "Enemy":
+                    OnEnemyClicked?.Invoke(rayHit.collider.gameObject);
+                    break;
+                case "Item":
+                    OnItemClicked?.Invoke(rayHit.collider.gameObject);
+                    break;
+                case "Room":
+                    OnRoomClicked?.Invoke(rayHit.collider.gameObject);
+                    break;
+                case "Recipe":
+                    OnRecipeClicked?.Invoke(rayHit.collider.gameObject); // 레시피 클릭 처리
+                    break;
             }
         }
     }

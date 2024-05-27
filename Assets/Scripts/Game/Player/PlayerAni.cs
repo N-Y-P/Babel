@@ -46,7 +46,7 @@ public class PlayerAni : MonoBehaviour
         {
             // 걷는 애니메이션 실행
             skeletonAnimation.AnimationName = "walking";
-
+            Moveable = false;
             // 플레이어를 목표 위치로 이동
             while (Vector3.Distance(player.transform.position, positions[i]) > 0.01f)
             {
@@ -61,6 +61,7 @@ public class PlayerAni : MonoBehaviour
 
         // 이동 완료 후 대기 애니메이션으로 변경
         skeletonAnimation.AnimationName = "idle";
+        Moveable = true;
         onComplete(); // 콜백 함수 호출
     }
     
