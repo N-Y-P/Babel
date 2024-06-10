@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     public Item item; // 획득한 아이템
+    public bool isEquipmentSlot; // 장비 슬롯인지 여부를 표시
     public ItemRecipe itemRecipe;//있는 경우만 
     public Image itemImage; // 아이템의 이미지
     public int itemCount = 1; // 획득한 아이템의 개수, 기본값 1
@@ -31,6 +32,13 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if (itemRecipe != null)
         {
             RecipeFactory.Instance.UpdateCraftingUI(itemRecipe); // 레시피 정보를 제작소 UI에 표시
+        }
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            if (isEquipmentSlot && item.itemType == Item.ItemType.Equipment)
+            {
+                ItemEquipManager.Instance.EquipItem(item);
+            }
         }
     }
     public void OnPointerEnter(PointerEventData eventData)

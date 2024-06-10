@@ -10,6 +10,7 @@ public class GameBtnEvent : MonoBehaviour
     public GameObject bagbtn;
     public GameObject battleScreen;
     public Tutorial tutorialScript; // Tutorial 스크립트
+    public RecipeFactory recipeFactory;// RecipeFactory 스크립트
 
     [Header("인벤토리 레시피")]
     public Button[] buttons; // 모든 버튼을 참조
@@ -54,27 +55,60 @@ public class GameBtnEvent : MonoBehaviour
         battleScreen.SetActive(true);
         TransparentWall.SetActive(true);
     }
-    //세 개의 버튼 중에서 
-    //무기 버튼 누르면 무기란 뜨고, 나머지 란 비활성화
-    //버튼 색깔은 
+    #region 인벤토리 속 무기,체력회복,정신회복 버튼들의 관계
     public void equipment_Recipes()
     {
         recipes[0].SetActive(true);
         recipes[1].SetActive(false);
         recipes[2].SetActive(false);
+        recipeFactory.AllSetfalse();
     }
     public void hp_medicine_Recipes()
     {
         recipes[0].SetActive(false);
         recipes[1].SetActive(true);
         recipes[2].SetActive(false);
+        recipeFactory.AllSetfalse();
     }
     public void mental_medicine_Recipes()
     {
         recipes[0].SetActive(false);
         recipes[1].SetActive(false);
         recipes[2].SetActive(true);
+        recipeFactory.AllSetfalse();
     }
+    #endregion
+
+    /*****테스트용 메소드. 추후 삭제****/
+    public Player player;  // Player 컴포넌트를 할당할 공개 필드
+    public GameObject Card;
+    // 체력을 감소시키는 메소드
+    public void DecreaseHealth()//적 공격, 약 효과
+    {
+        if (player != null)
+        {
+            player.CurrentHP -= 10;
+        }
+    }
+    // 경험치를 증가시키는 메소드
+    public void IncreaseExperience()
+    {
+        if (player != null)
+        {
+            player.CurrentExp += 100;
+            
+            if (player.CurrentExp >= player.ExpRequired)
+            {
+                //카드 생성로직
+                Card.SetActive(true);
+                //player.current_exp = 0;  // 경험치를 초과하면 초기화 (레벨업 로직 구현 가능)
+            }
+            
+        }
+    }
+    /*****추후 삭제****/
+
+
     public void OnButtonClicked(Button clickedButton)
     {
         foreach (Button btn in buttons)

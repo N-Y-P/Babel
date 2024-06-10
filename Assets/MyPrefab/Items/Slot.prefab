@@ -91,6 +91,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 0}
+  isEquipmentSlot: 1
+  itemRecipe: {fileID: 0}
   itemImage: {fileID: 6462024259577728765}
   itemCount: 1
   text_Count: {fileID: 8786655910909123563}

@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bfdaaea72be7294faada63ebd40d4f7, type: 3}
+  m_Script: {fileID: 11500000, guid: b0561a423a6112d479d483bd658b6434, type: 3}
   m_Name: "404_\uC0BC\uC9C0\uCC3D"
   m_EditorClassIdentifier: 
   itemName: "\uC0BC\uC9C0\uCC3D"
@@ -17,3 +17,6 @@ MonoBehaviour:
   itemImage: {fileID: 1573538315, guid: 7f01a28020a1f8647bb0f372e54715f0, type: 3}
   itemID: 404
   itemDescription: "\uB370\uBBF8\uC9C0 23 - 32"
+  minDamage: 23
+  maxDamage: 32
+  weaponSkin: p5

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Item", menuName = "New Item/item")]
+[CreateAssetMenu(fileName = "New Ingredient", menuName = "Inventory/New Ingredient")]
 public class Item : ScriptableObject  // 게임 오브젝트에 붙일 필요 X 
 {
     public enum ItemType  // 아이템 유형
@@ -19,4 +19,7 @@ public class Item : ScriptableObject  // 게임 오브젝트에 붙일 필요 X
 
     [TextArea(1, 10)]
     public string itemDescription; // 아이템 설명
+
 }
+
+

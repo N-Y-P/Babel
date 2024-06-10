@@ -16,6 +16,9 @@ public class RecipeFactory : MonoBehaviour
         public Image backgroundImage; // 배경 이미지 컴포넌트 (90, 30, 30) / 재료가 충분함(투명도0) / 충분하지 않음(투명도110)
     }
 
+    public GameObject resultPanel;//제작 후 결과물 표시
+    public Image resultImage;//제작 결과물 이미지
+
     public IngredientUI[] ingredientSlots; // 인스펙터에서 할당, 4개의 재료 슬롯
     public InventoryManager inventoryManager; // 인스펙터에서 할당
     public ClickInputSystem clickInputSystem;  // 클릭 입력 시스템 참조
@@ -100,8 +103,30 @@ public class RecipeFactory : MonoBehaviour
         if (currentRecipe.resultItem != null)
         {
             InventoryManager.Instance.AddItem(currentRecipe.resultItem);
-            Debug.Log("제작성공");
+            resultImage.sprite = currentRecipe.resultItem.itemImage; // 결과 아이템 이미지 업데이트
+            resultPanel.SetActive(true); // 결과 패널 활성화
+            Debug.Log("제작 성공: " + currentRecipe.resultItem.itemName);
+        }
+        else
+        {
+            resultPanel.SetActive(false);
+        }
+
+        // 모든 재료 슬롯 비활성화
+        foreach (var ingredientSlot in ingredientSlots)
+        {
+            ingredientSlot.panel.SetActive(false);
         }
     }
+    //모든 제작 슬롯 비활성화
+    public void AllSetfalse()
+    {
+        for (int i = 0; i < ingredientSlots.Length; i++)
+        {
+            ingredientSlots[i].panel.SetActive(false);
+        }
+        resultPanel.SetActive(false);
+    }
+
 
 }

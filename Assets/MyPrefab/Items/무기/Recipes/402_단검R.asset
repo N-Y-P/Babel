@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c5a3763cc3f6fa47bab5db83ef41f97, type: 3}
   m_Name: "402_\uB2E8\uAC80R"
   m_EditorClassIdentifier: 
-  resultItem: {fileID: 11400000, guid: 60376defe3e83874d8c1c7218fcc6051, type: 2}
+  resultItem: {fileID: 11400000, guid: c3bb8a66acf6df74eb044f61407c0158, type: 2}
   ingredients:
   - item: {fileID: 11400000, guid: e5f1480571a330348b673627148707ab, type: 2}
     quantity: 1

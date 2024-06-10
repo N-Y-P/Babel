@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bfdaaea72be7294faada63ebd40d4f7, type: 3}
+  m_Script: {fileID: 11500000, guid: b9a7c3ea798f0744f82aa412da271e49, type: 3}
   m_Name: "605_\uD5C8\uBE0C\uD2F0"
   m_EditorClassIdentifier: 
   itemName: "\uD5C8\uBE0C \uD2F0"
@@ -17,3 +17,5 @@ MonoBehaviour:
   itemImage: {fileID: 1422264428, guid: 7f01a28020a1f8647bb0f372e54715f0, type: 3}
   itemID: 605
   itemDescription: "\uC8C4\uCC45\uAC10 60 \uAC10\uC18C"
+  healthEffect: 0
+  mentalEffect: -60
